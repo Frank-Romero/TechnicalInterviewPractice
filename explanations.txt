@@ -1,0 +1,108 @@
+Question 1:
+Given two strings s and t, determine whether some anagram of t is a substring
+of s. For example: if s = "udacity" and t = "ad", then the function returns
+True. Your function definition should look like: question1(s, t) and return
+a boolean True or False.
+
+
+We can check whether some anagram of t is a substring of s by compiling 
+dictionaries of counts for t to check against substrings of s, and there only
+being a limited set of characters (26), the comparisons are in constant time
+and an efficiency of O(len(s)) at worst case. In addition because of 
+the limited set of characters there is a space complexity of O(1).
+
+
+Question 2:
+Given a string a, find the longest palindromic substring contained in a.
+Your function definition should look like question2(a), and return a string.
+
+
+Palindromes are mirrored around their centers, so we can start our search by
+expanding from the center of the string. Since palindromes can be centered in
+between letters when they are an even length (abba) there are O(2n - 1) centers
+and the efficency of checking the palindrome around its center is O(n), the
+total efficiency is O(n^2). As for space complexity it is O(1) as we are only
+storing and updating variables such as the left and  right index of the longest
+palindrome substring, rather than adding to a list of variables.
+
+
+Question 3:
+Given an undirected graph G, find the minimum spanning tree within G. A
+minimum spanning tree connects all vertices in a graph with the smallest
+possible total weight of edges. Your function should take in and return an
+adjacency list structured like this:
+{'A': [('B', 2)],
+ 'B': [('A', 2), ('C', 5)],
+ 'C': [('B', 5)]}
+Vertices are represented as unique strings. The function definition should
+be question3(G)
+
+
+Following Kruskal's algorithm, we sort all the edges by their weight, and start
+by including edges that do not cause a cycle. By tracking each vertex in a list
+those edges that do not form a cycle will be included. We will then take the
+union of the sets, and make sure that the edge for each is stored to generate
+the minimum spanning tree. The efficiency of the total algorithm is O(ElogE) due
+to cost of sorting through each of the edges and applying the find-union algorithm.
+The space complexity is O(E) depending on the storage of the edges.
+
+
+Question 4:
+Find the least common ancestor between two nodes on a binary search tree. The
+least common ancestor is the farthest node from the root that is an ancestor
+of both nodes. For example, the root is a common ancestor of all nodes on the
+tree, but if both nodes are descendents of the root's left child, then that
+left child might be the lowest common ancestor. You can assume that both nodes
+are in the tree, and the tree itself adheres to all BST properties. The
+function definition should look like question4(T, r, n1, n2), where T is the
+tree represented as a matrix, where the index of the list is equal to the
+integer stored in that node and a 1 represents a child node, r is a non-
+negative integer representing the root, and n1 and n2 are non-negative
+integers representing the two nodes in no particular order. For example, one
+test case might be
+question4([[0, 1, 0, 0, 0],
+          [0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0],
+          [1, 0, 0, 0, 1],
+          [0, 0, 0, 0, 0]],
+         3,
+         1,
+         4)
+and the answer would be 3
+
+
+As we are given a Binary Search Tree(BST) we start by comparing the root
+against the two nodes we are attempting to find the Least Common Ancester(LCA)
+of. If the root r is greater or equal to the smaller of the two nodes but less
+than or equal to the greater of the two nodes, then we already have the LCA in
+the root. If r is greater than the bigger of the two nodes, then we traverse
+down the left side of the tree and vice versa if the opposite is true and r is
+less than the minimum of the smaller of the two nodes. The efficiency of the
+algorithm is O(n), instead of O(n^2) as it would be with recursion, as the
+number of iterations of comparisons depend on the height of the BST that we
+have to traverse. The space complexity is O(1) as in addition to the given root
+and two nodes, we only store the current node on its traversal through the BST
+and return it once we have found the LCA.
+
+
+Question 5:
+Find the element in a singly linked list that's m elements from the end. For
+example, if a linked list has 5 elements, the 3rd element from the end is the
+3rd element. The function definition should look like question5(ll, m), where
+ll is the first node of a linked list and m is the "mth number from the end".
+You should copy/paste the Node class below to use as a representation of a
+node in the linked list. Return the value of the node at that position.
+class Node(object):
+ def __init__(self, data):
+   self.data = data
+   self.next = None
+
+
+We first initialize 2 variables as pointers to the head of the linked list, 
+the first as the reference and the second as the main pointer which we'll 
+return with the data of the node m elements from the end. We first traverse
+with the reference pointer to m nodes away from the head. We then move both
+pointers until the reference reaches the end of the list. With this our main
+pointer now is at the node m elements away from the end. The efficiency of the
+traversal through the singly linked list is O(n), and since the variables are
+just pointers and counters the space complexity is O(1).
